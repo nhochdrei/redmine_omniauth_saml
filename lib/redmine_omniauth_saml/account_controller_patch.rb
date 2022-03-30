@@ -4,7 +4,7 @@ module Redmine::OmniAuthSAML
   module AccountControllerPatch
     def self.included(base)
       base.class_eval do
-        unloadable
+        # unloadable
         AccountController.prepend(AccountControllerPatch)
       end
     end

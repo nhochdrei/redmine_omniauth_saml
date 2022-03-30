@@ -5,7 +5,7 @@
 <% end %>
 
 <div id="saml-login">
-  <%= link_to label_for_saml_login, :controller => "account", :action => "login_with_saml_redirect", :provider => "saml", :origin => back_url %>
+  <%= link_to label_for_saml_login, { :controller => "account", :action => "login_with_saml_redirect", :provider => "saml", :origin => back_url }, :method => :post %>
 </div>
 
 <% end %>

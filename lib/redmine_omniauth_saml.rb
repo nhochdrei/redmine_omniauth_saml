@@ -64,8 +64,9 @@ module Redmine::OmniAuthSAML
         HashWithIndifferentAccess.new.tap do |h|
           required_attribute_mapping.each do |symbol|
             key = configured_saml[:attribute_mapping][symbol]
-            h[symbol] = key.split('.')                # Get an array with nested keys: name.first will return [name, first]
-              .map {|x| [:[], x]}                     # Create pair elements being :[] symbol and the key
+            # PATCH n3: allow dots within key parts using a double dot
+            h[symbol] = key.split(/(?<!\.)\.(?!\.)/)  # Get an array with nested keys: na..me.first will return [na..me, first]
+              .map {|x| [:[], x.gsub('..', '.')]}     # Create pair elements being :[] symbol and the key (replacing .. with .)
               .inject(omniauth) do |hash, params|     # For each key, apply method :[] with key as parameter
                 hash.send(*params)
               end
@@ -89,15 +90,15 @@ module Redmine::OmniAuthSAML
       def validate_configuration!
         [ :assertion_consumer_service_url,
           :issuer,
-          :idp_sso_target_url,
+          :idp_sso_service_url,
           :name_identifier_format,
-          :idp_slo_target_url,
+          :idp_slo_service_url,
           :name_identifier_value,
           :attribute_mapping ].each do |k|
             raise "Redmine::OmiauthSAML.configure requires saml.#{k} to be set" unless saml[k]
           end
 
-        raise "Redmine::OmiauthSAML.configure requires either saml.idp_cert_fingerprint or saml.idp_cert to be set" unless saml[:idp_cert_fingerprint] || saml[:idp_cert]
+        raise "Redmine::OmiauthSAML.configure requires either saml.idp_cert_fingerprint[_validator] or saml.idp_cert[_multi] to be set" unless saml[:idp_cert_fingerprint] || saml[:idp_cert] || saml[:idp_cert_fingerprint_validator] || saml[:idp_cert_multi]
 
         required_attribute_mapping.each do |k|
           raise "Redmine::OmiauthSAML.configure requires saml.attribute_mapping[#{k}] to be set" unless saml[:attribute_mapping][k]
@@ -123,3 +124,11 @@ module Redmine::OmniAuthSAML
     end
   end
 end
+
+Rails.configuration.to_prepare do
+  require_dependency 'redmine_omniauth_saml/account_controller_patch'
+  require_dependency 'redmine_omniauth_saml/account_helper_patch'
+  require_dependency 'redmine_omniauth_saml/user_patch.rb'
+end
+
+require_dependency 'redmine_omniauth_saml/hooks'
