@@ -4,8 +4,12 @@
   <%= stylesheet_link_tag "login", :plugin => "redmine_omniauth_saml" %>
 <% end %>
 
-<div id="saml-login">
-  <%= link_to label_for_saml_login, { :controller => "account", :action => "login_with_saml_redirect", :provider => "saml", :origin => back_url }, :method => :post %>
+<div id="<%= id_for_saml_login -%>">
+  <%= link_to({ :controller => "account", :action => "login_with_saml_redirect", :provider => "saml", :origin => back_url }, :method => :post) do %>
+    <%= call_hook(:view_saml_login_begin) -%>
+    <%= label_for_saml_login -%>
+    <%= call_hook(:view_saml_login_end) -%>
+  <% end %>
 </div>
 
 <% end %>

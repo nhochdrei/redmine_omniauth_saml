@@ -13,6 +13,10 @@ module Redmine::OmniAuthSAML
       def label_for_saml_login
         Redmine::OmniAuthSAML.label_login_with_saml.presence || l(:label_login_with_saml)
       end
+
+      def id_for_saml_login
+        Redmine::OmniAuthSAML.wrapper_id.presence || 'saml-login'
+      end
     end
   end
 end

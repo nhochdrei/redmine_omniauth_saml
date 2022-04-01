@@ -6,3 +6,4 @@ en:
   text_full_logout_proposal: Gegebenenfalls sollten Sie %{value}, ehe Sie einen anderen Nutzernamen ausprobieren.
   text_logout_from_saml: SSO-Sitzung beenden
   label_onthefly_creation: Nutzer automatisch erstellen?
+  label_saml_wrapper_id: ID für SAML-Wrapper

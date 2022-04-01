@@ -11,6 +11,6 @@
   <%= check_box_tag 'settings[replace_redmine_login]', true, @settings['replace_redmine_login'] %>
 </p>
 <p>
-  <label><%= l(:label_onthefly_creation) %></label>
-  <%= check_box_tag 'settings[onthefly_creation]', true, @settings['onthefly_creation'] %>
+  <label><%= l(:label_saml_wrapper_id) %></label>
+  <%= text_field_tag 'settings[saml_wrapper_id]', @settings['saml_wrapper_id'], :size => 50 %>
 </p>

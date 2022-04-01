@@ -13,6 +13,10 @@ module Redmine::OmniAuthSAML
       enabled? && settings_hash["onthefly_creation"]
     end
 
+    def wrapper_id
+      settings_hash["saml_wrapper_id"]
+    end
+
     def label_login_with_saml
       settings_hash["label_login_with_saml"]
     end

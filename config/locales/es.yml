@@ -6,3 +6,5 @@ es:
   text_full_logout_proposal: Tal vez quiera %{value} antes de intentar con otro usuario
   text_logout_from_saml: cerrar su sesión SSO
   label_onthefly_creation: Crear usuarios automáticamente?
+  # TODO
+  label_saml_wrapper_id: ID for SAML wrapper
