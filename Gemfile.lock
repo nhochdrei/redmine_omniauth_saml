@@ -26,7 +26,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  omniauth (~> 2.0, >= 2.0.4)
+  omniauth (~> 2.0.0, >= 2.0.4)
   omniauth-saml (~> 2.1)
   ruby-saml (~> 1.14)
 
